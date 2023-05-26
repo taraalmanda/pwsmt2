@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            background-color: rgb(87, 205, 252);
+            color: black;
+            text-align: justify;
+            margin: auto;
+            width: 960px
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Pahlawan</title>
+</head>
+<body>
+    <h2> DATA NAMA PAHLAWAN DI INDONESIA </h2>
+    <div id="result">
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script>
+      $(document).ready(function () {
+            var url = 'https://indonesia-public-static-api.vercel.app/api/heroes';
+            $.get(url, function (data, status) {
+                console.log(data);
+                for (i = 0; i < data.length; i++) {
+                    var name = '<h3>' + "Name : "+ data[i].name + "</h3>";
+                    var birth_year = '<h3>' + "Birthday Year : " + data[i].birth_year + "</h3>";
+                    var death_year = '<h3>' + "Death Year : " + data[i].death_year + "</h3>";
+                    var description = '<h3>' + "Description : " + data[i].description + "</h3>";
+                    var ascension_year = '<h3>' + "Ascension Year : " + data[i].ascension_year + "</h3>"
+                    $('#result').append(name);
+                    $('#result').append(birth_year);
+                    $('#result').append(death_year);
+                    $('#result').append(description);
+                    $('#result').append(ascension_year);
+                }
+            })
+        })
+
+    </script>
+</body>
+</html>

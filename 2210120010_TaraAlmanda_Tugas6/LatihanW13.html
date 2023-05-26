@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+          background-color: rgb(160, 204, 221);
+          color: black;
+          text-align: justify;
+          margin: auto;
+          width: 960px
+      }
+  </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LatihanW13</title>
+  </head>
+
+  <body>
+    <h2>
+    Data Daerah di Indonesia :
+    <div class="row g-3">
+      <p class="col-md-2">provinsi :</p>
+      <div class="col-md-2">
+        <select id="provinsi"></select>
+      </div>
+    </div>
+    <br>
+    <div class="row g-3">
+      <p class="col-md-2">Kabupaten / Kota :</p>
+      <div class="col-md-2">
+        <select id="kabupatenkota"></select>
+      </div>
+    </div>
+    <br>
+    <div class="row g-3">
+      <p class="col-md-2">kecamatan :</p>
+      <div class="col-md-2">
+        <select id="kecamatan"></select>
+      </div>
+    </div>
+    <br>
+    <div class="row g-3">
+      <p class="col-md-2">kelurahan :</p>
+      <div class="col-md-2">
+        <select id="kelurahan"></select>
+      </div>
+    </div>
+    <br>
+    </h2>
+    <script
+      src="https://code.jquery.com/jquery-3.7.0.js"
+      integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        var urlprovinsi =
+          "https://dev.farizdotid.com/api/daerahindonesia/provinsi";
+        $.get(urlprovinsi, function (data, status) {
+          //console.log(data.provinsi);
+          for (i = 0; i < data.provinsi.length; i++) {
+            var opt =
+              "<option value=" +
+              data.provinsi[i].id +
+              ">" +
+              data.provinsi[i].nama +
+              "</option>";
+            $("#provinsi").append(opt);
+          }
+        });
+
+        $("#provinsi").change(function () {
+          var id_provinsi = $("#provinsi").val();
+          var urlkab =
+            "https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=" +
+            id_provinsi;
+          $("#kabupatenkota").empty();
+          $.get(urlkab, function (data, status) {
+            for (i = 0; i < data.kota_kabupaten.length; i++) {
+              var opt =
+                "<option value=" +
+                data.kota_kabupaten[i].id +
+                ">" +
+                data.kota_kabupaten[i].nama +
+                "</option>";
+              $("#kabupatenkota").append(opt);
+            }
+          });
+
+          $("#kabupatenkota").change(function () {
+            var id_kabupatenkota = $("#kabupatenkota").val();
+            var urlkec =
+              "https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=" +
+              id_kabupatenkota;
+            $("#kecamatan").empty();
+            $.get(urlkec, function (data, status) {
+              for (i = 0; i < data.kecamatan.length; i++) {
+                var opt =
+                  "<option value=" +
+                  data.kecamatan[i].id +
+                  ">" +
+                  data.kecamatan[i].nama +
+                  "</option>";
+                $("#kecamatan").append(opt);
+              }
+            });
+          });
+
+          $("#kecamatan").change(function () {
+            var id_kecamatan = $("#kecamatan").val();
+            var urlkel =
+              "https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=" +
+              id_kecamatan;
+            $("#kelurahan").empty();
+            $.get(urlkel, function (data, status) {
+              for (i = 0; i < data.kelurahan.length; i++) {
+                var opt =
+                  "<option value=" +
+                  data.kelurahan[i].id +
+                  ">" +
+                  data.kelurahan[i].nama +
+                  "</option>";
+                $("#kelurahan").append(opt);
+              }
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
